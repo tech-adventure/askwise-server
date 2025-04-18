@@ -4,7 +4,7 @@ from fastapi import FastAPI, APIRouter
 from api.config import initialize_api_keys
 
 # Routers
-from api.routers.interview import router as interview_router
+from api.routers import interview
 
 # Initialize application
 app = FastAPI(
@@ -33,5 +33,5 @@ async def health():
     return {"status": "ok"}
 
 # Add the API routes to the main app
-api_router.include_router(interview_router)
+api_router.include_router(interview.router)
 app.include_router(api_router)

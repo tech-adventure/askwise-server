@@ -5,4 +5,5 @@ router = APIRouter(prefix="/interview", tags=["interview"], responses={404: {"de
 
 @router.post("/", response_model=InterviewResponse)
 def interview(request: InterviewRequest):
+    print(request)
     return {"questions": ["What is your name?", "What is your favorite color?"]}
