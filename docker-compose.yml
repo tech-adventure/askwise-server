@@ -1,0 +1,18 @@
+services:
+  askwise-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/api      
+    environment:
+      - UVICORN_HOST=0.0.0.0
+      - UVICORN_PORT=8000
+      - UVICORN_RELOAD=true
+      - UVICORN_WORKERS=4
+      - UVICORN_LOG_LEVEL=info
+      - UVICORN_ACCESS_LOG=true
+      - UVICORN_ERROR_LOG=true
+    command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
