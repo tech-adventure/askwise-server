@@ -46,3 +46,15 @@ def initialize_api_keys():
 
     # Return the OpenAI API key and the LLM model
     return openai_api_key, llm
+
+def get_llm():
+    """
+    Get the LLM model.
+    If the LLM model is not initialized, it will be initialized.
+    """
+    global llm
+
+    if not llm:
+        initialize_api_keys()
+
+    return llm
