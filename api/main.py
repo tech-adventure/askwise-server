@@ -1,19 +1,10 @@
 from fastapi import FastAPI, APIRouter
+
+# Config
 from api.config import initialize_api_keys
 
-from pydantic import BaseModel
-
-# Schemas for the API
-class InterviewRequest(BaseModel):
-    role: str
-    description: str
-    level: str | None = None
-    company: str
-
-class InterviewResponse(BaseModel):
-    questions: list[str]    
-
-
+# Routers
+from api.routers.interview import router as interview_router
 
 # Initialize application
 app = FastAPI(
@@ -26,22 +17,21 @@ app = FastAPI(
 
 # Initialize API keys at startup
 @app.on_event("startup")
-def startup_event():        
+async def startup_event():        
     initialize_api_keys()        
 
 
 # Initialize API router
-api_router = APIRouter(prefix="/api/v1")
-
+api_router = APIRouter(prefix="/api/v1", responses={404: {"description": "Not found"}})
 
 @api_router.get("/")
-def root():
+async def root():
     return {"message": "🚀 Askwise API is up and running!"}
 
 @api_router.get("/health")
-def health():
+async def health():
     return {"status": "ok"}
 
-
 # Add the API routes to the main app
+api_router.include_router(interview_router)
 app.include_router(api_router)

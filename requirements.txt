@@ -4,3 +4,4 @@ crewai
 langchain-openai
 python-dotenv
 pydantic
+sqlmodel
